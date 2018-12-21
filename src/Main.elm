@@ -5,6 +5,7 @@ import Html.Styled as Html exposing (Html, toUnstyled)
 import ImagePaths exposing (ImagePaths, imagePathsDecoder)
 import Json.Decode
 import Pages.LessonOne
+import Pages.LessonTwo
 
 
 type alias Model =
@@ -53,4 +54,5 @@ update _ model =
 
 view : Model -> Html Msg
 view =
-    Pages.LessonOne.view
+    -- Pages.LessonOne.view
+    Pages.LessonTwo.view

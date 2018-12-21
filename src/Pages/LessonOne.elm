@@ -1,5 +1,6 @@
 module Pages.LessonOne exposing (view)
 
+import Colours
 import Css
 import Css.Media
 import Html.Styled as Html exposing (..)
@@ -80,6 +81,7 @@ viewPie imagePaths attrs { title, description, image, link } =
         ]
 
 
+row : ImagePaths -> List ( Pie, List (Attribute msg) ) -> Html msg
 row imagePaths ps =
     let
         showPie ( pie, attrs ) =
@@ -109,41 +111,33 @@ view { imagePaths } =
             ]
         ]
         [ row imagePaths
-            [ ( boston, fourPerRow )
-            , ( coconut, fourPerRow )
-            , ( keyLime, fourPerRow )
-            , ( pumpkin, fourPerRow )
+            [ ( boston, firstRow )
+            , ( coconut, firstRow )
+            , ( keyLime, firstRow )
+            , ( pumpkin, firstRow )
             ]
         , row imagePaths
-            [ ( keyLime, twoPerRow )
-            , ( pumpkin, twoPerRow )
+            [ ( keyLime, secondRow )
+            , ( pumpkin, secondRow )
             ]
         , row imagePaths
-            [ ( boston, oneQuarter )
-            , ( coconut, threeQuarters )
+            [ ( boston, startThirdRow )
+            , ( coconut, endThirdRow )
             ]
         , row imagePaths
-            [ ( boston, wholeRow )
+            [ ( boston, fourthRow )
             ]
         ]
 
 
-threeQuarters =
+endThirdRow : List (Attribute msg)
+endThirdRow =
     [ css
-        [ Css.width (Css.pct 92)
-        , Css.marginLeft (Css.pct 4)
-        , Css.marginRight (Css.pct 4)
-        , Css.minHeight (Css.px 1)
-        , Css.backgroundColor colours.blue
-        , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480), Css.Media.maxWidth (Css.px 767) ] ]
-            [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
-            , Css.float Css.left
-            , Css.width (Css.pct 92)
-            ]
+        [ Css.backgroundColor Colours.blue
+        , stackOnMobile
+        , stackOnTablet
         , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 768) ] ]
             [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
             , Css.float Css.left
             , Css.width (Css.pct 68)
             ]
@@ -151,22 +145,14 @@ threeQuarters =
     ]
 
 
-oneQuarter =
+startThirdRow : List (Attribute msg)
+startThirdRow =
     [ css
-        [ Css.width (Css.pct 92)
-        , Css.marginLeft (Css.pct 4)
-        , Css.marginRight (Css.pct 4)
-        , Css.minHeight (Css.px 1)
-        , Css.backgroundColor colours.yellow
-        , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480), Css.Media.maxWidth (Css.px 767) ] ]
-            [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
-            , Css.float Css.left
-            , Css.width (Css.pct 92)
-            ]
+        [ Css.backgroundColor Colours.yellow
+        , stackOnMobile
+        , stackOnTablet
         , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 768) ] ]
             [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
             , Css.float Css.left
             , Css.width (Css.pct 20)
             ]
@@ -174,36 +160,20 @@ oneQuarter =
     ]
 
 
-wholeRow =
+fourthRow : List (Attribute msg)
+fourthRow =
     [ css
-        [ Css.width (Css.pct 92)
-        , Css.marginLeft (Css.pct 4)
-        , Css.marginRight (Css.pct 4)
-        , Css.minHeight (Css.px 1)
-        , Css.backgroundColor colours.purple
-        , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480), Css.Media.maxWidth (Css.px 767) ] ]
-            [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
-            , Css.float Css.left
-            , Css.width (Css.pct 92)
-            ]
-        , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 768) ] ]
-            [ Css.marginRight Css.zero
-            , Css.minHeight (Css.px 1)
-            , Css.float Css.left
-            , Css.width (Css.pct 92)
-            ]
+        [ Css.backgroundColor Colours.purple
+        , stackOnMobile
         ]
     ]
 
 
-twoPerRow =
+secondRow : List (Attribute msg)
+secondRow =
     [ css
-        [ Css.width (Css.pct 92)
-        , Css.marginLeft (Css.pct 4)
-        , Css.marginRight (Css.pct 4)
-        , Css.minHeight (Css.px 1)
-        , Css.backgroundColor colours.pink
+        [ Css.backgroundColor Colours.pink
+        , stackOnMobile
         , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480) ] ]
             [ Css.marginRight Css.zero
             , Css.float Css.left
@@ -213,13 +183,11 @@ twoPerRow =
     ]
 
 
-fourPerRow =
+firstRow : List (Attribute msg)
+firstRow =
     [ css
-        [ Css.width (Css.pct 92)
-        , Css.marginLeft (Css.pct 4)
-        , Css.marginRight (Css.pct 4)
-        , Css.minHeight (Css.px 1)
-        , Css.backgroundColor colours.yellow
+        [ Css.backgroundColor Colours.yellow
+        , stackOnMobile
         , Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480), Css.Media.maxWidth (Css.px 767) ] ]
             [ Css.marginRight Css.zero
             , Css.float Css.left
@@ -234,13 +202,23 @@ fourPerRow =
     ]
 
 
-colours =
-    { yellow =
-        Css.hex "ffc"
-    , pink =
-        Css.hex "fcf"
-    , blue =
-        Css.hex "cff"
-    , purple =
-        Css.hex "ccf"
-    }
+stackOnMobile : Css.Style
+stackOnMobile =
+    Css.batch
+        [ Css.width (Css.pct 92)
+        , Css.marginLeft (Css.pct 4)
+        , Css.marginRight (Css.pct 4)
+        , Css.minHeight (Css.px 1)
+        ]
+
+
+stackOnTablet : Css.Style
+stackOnTablet =
+    Css.batch
+        [ Css.Media.withMedia [ Css.Media.only Css.Media.screen [ Css.Media.minWidth (Css.px 480), Css.Media.maxWidth (Css.px 767) ] ]
+            [ Css.marginRight Css.zero
+            , Css.minHeight (Css.px 1)
+            , Css.float Css.left
+            , Css.width (Css.pct 92)
+            ]
+        ]
